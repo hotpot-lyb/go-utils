@@ -24,7 +24,7 @@ import (
 
 	"github.com/nu7hatch/gouuid"
 
-	"github.com/hotpot-lyb/go-utils/trace/glog"
+	"hotpot-lyb/go-utils/trace/glog"
 )
 
 const (

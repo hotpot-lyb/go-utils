@@ -1,4 +1,4 @@
-module github.com/hotpot-lyb/go-utils
+module hotpot-lyb/go-utils
 
 go 1.17
 
