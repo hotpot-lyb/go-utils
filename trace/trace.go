@@ -146,7 +146,7 @@ func (t *trace) packHeader() string {
 }
 
 func (t *trace) header() string {
-	t.C.RLocker()
+	t.C.RLock()
 	defer t.C.RUnlock()
 	return t.head
 	// return t.head + strconv.Itoa(int(t.Duration())) + "] "
