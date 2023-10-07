@@ -19,6 +19,7 @@ import (
 	"bytes"
 	"fmt"
 	"runtime"
+	"sync"
 	"time"
 
 	"github.com/nu7hatch/gouuid"
@@ -68,6 +69,7 @@ type trace struct {
 	name      string
 	id        string
 	head      string
+	C         sync.RWMutex
 }
 
 // New will create a Trace using a name, identifying the trace process
@@ -96,7 +98,8 @@ func WithParent(p Trace, name string) Trace {
 		}
 		t.id = id
 	}
-
+	t.C.Lock()
+	defer t.C.Unlock()
 	t.head = t.packHeader()
 	return t
 }
@@ -109,6 +112,8 @@ func WithID(name string, id string) Trace {
 		name:      name,
 		id:        id,
 	}
+	t.C.Lock()
+	defer t.C.Unlock()
 	t.head = t.packHeader()
 	return t
 }
@@ -141,6 +146,8 @@ func (t *trace) packHeader() string {
 }
 
 func (t *trace) header() string {
+	t.C.RLocker()
+	defer t.C.RUnlock()
 	return t.head
 	// return t.head + strconv.Itoa(int(t.Duration())) + "] "
 }
