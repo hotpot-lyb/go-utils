@@ -218,8 +218,9 @@ func (t *trace) log(out func(depth int, args ...interface{}), args ...interface{
 }
 
 func (t *trace) logf(out func(depth int, args ...interface{}), format string, args ...interface{}) {
-	header := t.header()
-	log := fmt.Sprintf(header+format, args...)
+	t.C.RLock()
+	defer t.C.RUnlock()
+	log := fmt.Sprintf(t.header()+format, args...)
 	out(stackDepth, log)
 	// out(t.header()+format, stackDepth, args...)
 }
