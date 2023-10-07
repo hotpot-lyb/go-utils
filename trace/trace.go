@@ -19,7 +19,6 @@ import (
 	"bytes"
 	"fmt"
 	"runtime"
-	"strconv"
 	"time"
 
 	"github.com/nu7hatch/gouuid"
@@ -136,13 +135,14 @@ func (t *trace) packHeader() string {
 		buffer.WriteString("] ")
 	}
 
-	buffer.WriteString("tduration=[")
+	// buffer.WriteString("tduration=[")
 
 	return buffer.String()
 }
 
 func (t *trace) header() string {
-	return t.head + strconv.Itoa(int(t.Duration())) + "] "
+	return t.head
+	// return t.head + strconv.Itoa(int(t.Duration())) + "] "
 }
 
 func (t *trace) Parent() Trace {
